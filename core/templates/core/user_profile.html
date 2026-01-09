@@ -1,0 +1,35 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+
+<h1>{{ profile_user.username }}</h1>
+
+<img src="{{ profile.profile_image.url }}" width="150"><br>
+
+<p>{{ profile.bio }}</p>
+
+<p>
+    👥 Followers: {{ followers_count }} |
+    ➡️ Following: {{ following_count }}
+</p>
+
+{% if profile_user != request.user %}
+    {% if is_following %}
+        <a href="/follow/{{ profile_user.id }}/">Unfollow</a>
+    {% else %}
+        <a href="/follow/{{ profile_user.id }}/">Follow</a>
+    {% endif %}
+
+    | <a href="/chat/{{ profile_user.id }}/">💬 Message</a>
+{% endif %}
+
+
+<hr>
+
+<h3>Posts</h3>
+
+{% for post in posts %}
+    <img src="{{ post.image.url }}" width="200">
+{% endfor %}
+
+{% endblock %}

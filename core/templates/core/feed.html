@@ -1,0 +1,55 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+
+<h2>📸Feed</h2>
+
+{% for post in posts %}
+<div class="post">
+
+    <div class="post-header">
+        <a href="/user/{{ post.user.id }}/">{{ post.user.username }}</a>
+    </div>
+
+    <img src="{{ post.image.url }}">
+
+    <p>{{ post.caption }}</p>
+
+    <div class="actions">
+    <span>❤️ {{ post.like_set.count }} likes</span>
+
+    {% if post.id in liked_posts %}
+        <a href="/like/{{ post.id }}/">
+            <i class="fa-solid fa-heart" style="color:red;"></i>
+        </a>
+    {% else %}
+        <a href="/like/{{ post.id }}/">
+            <i class="fa-regular fa-heart"></i>
+        </a>
+    {% endif %}
+
+    {% if post.user == request.user %}
+        <a href="/delete-post/{{ post.id }}/" onclick="return confirm('Delete this post?')">
+            <i class="fa-solid fa-trash"></i>
+        </a>
+    {% endif %}
+</div>
+
+
+    <hr>
+<h4><i class="fa-regular fa-comment"></i> Comments</h4>
+
+    {% for comment in post.comments.all %}
+        <p><b>{{ comment.user.username }}</b> {{ comment.text }}</p>
+    {% endfor %}
+
+    <form method="POST" action="/comment/{{ post.id }}/" class="comment-box">
+        {% csrf_token %}
+        <input type="text" name="comment" placeholder="Add a comment..." required>
+        <button type="submit">Post</button>
+    </form>
+
+</div>
+{% endfor %}
+
+{% endblock %}

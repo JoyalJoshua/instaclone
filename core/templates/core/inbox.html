@@ -1,0 +1,47 @@
+{% extends "core/base.html" %}
+{% block content %}
+
+<h2>💬 Inbox</h2>
+
+<input type="text" id="searchInput" placeholder="Search users..." style="width:100%; padding:8px; margin-bottom:10px;">
+
+<div id="userList">
+{% if users %}
+    {% for user, count in users.items %}
+        <p class="chat-user">
+            <a href="/chat/{{ user.id }}/">
+                <span class="username">
+    {{ user.username }}
+    {% if user.profile.last_activity|timesince < "1 minute" %}
+        <span style="color:green;">🟢</span>
+    {% endif %}
+</span>
+
+                {% if count > 0 %}
+                    <span style="color:red;"> ({{ count }} new)</span>
+                {% endif %}
+            </a>
+        </p>
+    {% endfor %}
+{% else %}
+    <p>No messages yet.</p>
+{% endif %}
+</div>
+
+<script>
+document.getElementById("searchInput").addEventListener("keyup", function() {
+    let filter = this.value.toLowerCase();
+    let users = document.querySelectorAll(".chat-user");
+
+    users.forEach(function(u) {
+        let name = u.querySelector(".username").innerText.toLowerCase();
+        if (name.includes(filter)) {
+            u.style.display = "";
+        } else {
+            u.style.display = "none";
+        }
+    });
+});
+</script>
+
+{% endblock %}

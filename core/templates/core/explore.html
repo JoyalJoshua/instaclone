@@ -1,0 +1,17 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+
+<h2>🌍 Explore</h2>
+
+<div class="grid">
+
+{% for post in posts %}
+    <a href="/user/{{ post.user.id }}/">
+        <img src="{{ post.image.url }}" alt="post">
+    </a>
+{% endfor %}
+
+</div>
+
+{% endblock %}

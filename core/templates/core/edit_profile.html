@@ -1,0 +1,28 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+
+<h1>✏️ Edit Profile</h1>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <p>
+        <b>Current Photo:</b><br>
+        <img src="{{ profile.profile_image.url }}" width="150">
+    </p>
+
+    <p>
+        Change Photo:<br>
+        <input type="file" name="profile_image">
+    </p>
+
+    <p>
+        Bio:<br>
+        <textarea name="bio" rows="4" cols="40">{{ profile.bio }}</textarea>
+    </p>
+
+    <button type="submit">Save Changes</button>
+</form>
+
+{% endblock %}
