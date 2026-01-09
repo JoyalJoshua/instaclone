@@ -81,18 +81,20 @@ from django.contrib.auth.decorators import login_required
 
 @login_required(login_url="login")
 def upload(request):
-    if request.method == "POST":
-        image = request.FILES['image']
+    if request.method == "POST" and request.FILES:
+        image = request.FILES.get('image')
         caption = request.POST.get('caption', '')
 
-        Post.objects.create(
-            user=request.user,
-            image=image,
-            caption=caption
-        )
-        return redirect("feed")
+        if image:
+            Post.objects.create(
+                user=request.user,
+                image=image,
+                caption=caption
+            )
+            return redirect("feed")
 
     return render(request, "core/upload.html")
+
 
 # End of file instaclone/core/views.py
 
