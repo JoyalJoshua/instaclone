@@ -1,3 +1,5 @@
+{% extends "core/base.html" %}
+
 <h2>Signup</h2>
 <form method="POST">
     {% csrf_token %}
@@ -5,4 +7,7 @@
     <input name="password" type="password" placeholder="Password"><br>
     <button>Create Account</button>
 </form>
-{{ error }}
+{% if error %}
+<p class="error">{{ error }}</p>
+{% endif %}
+<p>Already have an account? <a href="{% url 'core:login' %}">Login here</a></p>
