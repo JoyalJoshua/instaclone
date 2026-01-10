@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'core/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    
 </head>
 <body>
 
+{% if user.is_authenticated %}
 <div class="navbar">
     <b>📸 InstaClone</b> |
     <a href="/"><i class="fa-solid fa-house"></i> Feed</a>
@@ -20,9 +20,9 @@
     <a href="/logout/"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
     <a href="/inbox/"><i class="fa-solid fa-envelope"></i> Messages</a>
 
-
     <button onclick="toggleTheme()" style="float:right;">🌙</button>
 </div>
+{% endif %}
 
 <div class="container">
     {% block content %}
