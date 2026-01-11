@@ -2,15 +2,19 @@
 
 {% block content %}
 
-<h2>🌍 Explore</h2>
+<div class="page-content">
 
-<div class="grid">
+    <h2>🌍 Explore</h2>
 
-{% for post in posts %}
-    <a href="/user/{{ post.user.id }}/">
-        <img src="{{ post.image.url }}" alt="post">
-    </a>
-{% endfor %}
+    <div class="grid">
+
+        {% for post in posts %}
+            <a href="/user/{{ post.user.id }}/">
+                <img src="{{ post.image.url }}" alt="post">
+            </a>
+        {% endfor %}
+
+    </div>
 
 </div>
 

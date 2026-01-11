@@ -2,27 +2,34 @@
 
 {% block content %}
 
-<h1>🔔 Notifications</h1>
+<div class="page-content">
 
-{% if notifications %}
-    {% for n in notifications %}
-        <div style="border:1px solid #ccc; padding:10px; margin:10px;">
-            <b>{{ n.sender.username }}</b>
+    <h2>🔔 Notifications</h2>
 
-            {% if n.notification_type == "follow" %}
-                started following you.
-            {% elif n.notification_type == "like" %}
-                liked your post.
-            {% elif n.notification_type == "comment" %}
-                commented on your post.
-            {% endif %}
+    {% if notifications %}
+        {% for n in notifications %}
+            <div class="notification-card">
 
-            <br>
-            <small>{{ n.created_at }}</small>
-        </div>
-    {% endfor %}
-{% else %}
-    <p>No notifications yet.</p>
-{% endif %}
+                <div>
+                    <b>{{ n.sender.username }}</b>
+
+                    {% if n.notification_type == "follow" %}
+                        started following you.
+                    {% elif n.notification_type == "like" %}
+                        liked your post.
+                    {% elif n.notification_type == "comment" %}
+                        commented on your post.
+                    {% endif %}
+                </div>
+
+                <small>{{ n.created_at }}</small>
+
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No notifications yet.</p>
+    {% endif %}
+
+</div>
 
 {% endblock %}

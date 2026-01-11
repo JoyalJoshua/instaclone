@@ -1,31 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Upload Post</title>
-</head>
-<body>
-
-
-
-
 {% extends "core/base.html" %}
 
 {% block content %}
 
-<h1>📤Upload New Post</h1>
+<div class="page-content">
 
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <input type="file" name="image" required><br><br>
-    <textarea name="caption" placeholder="Write a caption..."></textarea><br><br>
-    <button type="submit">Upload</button>
-</form>
+    <h1>📤 Upload New Post</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <input type="file" name="image" required>
+        <br><br>
+
+        <textarea name="caption" placeholder="Write a caption..." rows="3"></textarea>
+        <br><br>
+
+        <button type="submit">Upload</button>
+    </form>
+
+</div>
 
 {% endblock %}
-
-
-<br>
-<a href="/">⬅ Back to Feed</a>
-
-</body>
-</html>

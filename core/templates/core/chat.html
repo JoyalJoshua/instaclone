@@ -1,83 +1,76 @@
 {% extends "core/base.html" %}
+
 {% block content %}
 
-<h2>
-    Chat with {{ other_user.username }}
+<div class="page-content">
 
-    {% if other_user.profile.last_activity|timesince < "1 minute" %}
-        <span style="color:green;">🟢 Online</span>
-    {% else %}
-        <small>Last seen {{ other_user.profile.last_activity|timesince }} ago</small>
-    {% endif %}
-</h2>
+    <h2>
+        Chat with {{ other_user.username }}
 
+        {% if other_user.profile.last_activity|timesince < "1 minute" %}
+            <span style="color:green;">🟢 Online</span>
+        {% else %}
+            <small>Last seen {{ other_user.profile.last_activity|timesince }} ago</small>
+        {% endif %}
+    </h2>
 
-<div id="chat-box" style="border:1px solid #ccc; padding:10px; height:350px; overflow-y:scroll;">
+    <div class="chat-card">
 
+        <div id="chat-box" class="chat-box">
 
-    {% for m in messages %}
-    {% if m.sender == request.user %}
-        <!-- My message -->
-        <div style="text-align:right; margin:5px;">
-            <span style="background:#3897f0; color:white; padding:8px 12px; border-radius:15px; display:inline-block;">
-                
-                {% if m.image %}
-                    <img src="{{ m.image.url }}" style="max-width:200px; border-radius:8px;"><br>
+            {% for m in messages %}
+                {% if m.sender == request.user %}
+                    <!-- My message -->
+                    <div class="msg-row me">
+                        <div class="msg-bubble me">
+
+                            {% if m.image %}
+                                <img src="{{ m.image.url }}">
+                            {% endif %}
+
+                            {% if m.text %}
+                                <p>{{ m.text }}</p>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                {% else %}
+                    <!-- Other message -->
+                    <div class="msg-row other">
+                        <div class="msg-bubble other">
+
+                            {% if m.image %}
+                                <img src="{{ m.image.url }}">
+                            {% endif %}
+
+                            {% if m.text %}
+                                <p>{{ m.text }}</p>
+                            {% endif %}
+
+                        </div>
+                    </div>
                 {% endif %}
+            {% endfor %}
 
-                {% if m.text %}
-                    {{ m.text }}
-                {% endif %}
-
-            </span>
         </div>
-    {% else %}
-        <!-- Other user's message -->
-        <div style="text-align:left; margin:5px;">
-            <span style="background:#eee; color:black; padding:8px 12px; border-radius:15px; display:inline-block;">
 
-                {% if m.image %}
-                    <img src="{{ m.image.url }}" style="max-width:200px; border-radius:8px;"><br>
-                {% endif %}
+        <form method="POST" enctype="multipart/form-data" class="chat-input">
+            {% csrf_token %}
+            <input type="text" name="message" placeholder="Type message...">
+            <input type="file" name="image">
+            <button type="submit">Send</button>
+        </form>
 
-                {% if m.text %}
-                    {{ m.text }}
-                {% endif %}
-
-            </span>
-        </div>
-    {% endif %}
-{% endfor %}
-
+    </div>
 
 </div>
-
-<form method="POST"  enctype="multipart/form-data">
-
-    {% csrf_token %}
-    
-
-<div>
-    <input type="text" name="message" placeholder="Type message...">
-    <input type="file" name="image">
-    <button type="submit">Send</button>
-</div>
-
-
-
-</form>
-
 
 <script>
     var chatBox = document.getElementById("chat-box");
     if (chatBox) {
         chatBox.scrollTop = chatBox.scrollHeight;
     }
-</script>
 
-
-
-<script>
     // Auto refresh chat every 3 seconds
     setInterval(function() {
         fetch(window.location.href)
@@ -96,6 +89,5 @@
             });
     }, 3000);
 </script>
-
 
 {% endblock %}

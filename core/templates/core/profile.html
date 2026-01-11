@@ -2,38 +2,45 @@
 
 {% block content %}
 
-<div class="post" style="text-align:center;">
+<div class="page-content">
 
-    <img src="{{ profile.profile_image.url }}" width="150" style="border-radius:50%;"><br><br>
+    <!-- Profile Card -->
+    <div class="post" style="text-align:center;">
 
-    <h2>{{ request.user.username }}</h2>
+        <img src="{{ profile.profile_image.url }}" width="140" style="border-radius:50%;"><br><br>
 
-    <p>{{ profile.bio }}</p>
+        <h2>{{ request.user.username }}</h2>
 
-    <p>
-        <a href="/edit-profile/"><i class="fa-solid fa-pen"></i> Edit Profile</a>
+        <p>{{ profile.bio }}</p>
 
-        
-    </p>
+        <p>
+            <a href="/edit-profile/">
+                <i class="fa-solid fa-pen"></i> Edit Profile
+            </a>
+        </p>
+
+    </div>
+
+    <h3 style="margin-top:30px;">My Posts</h3>
+
+    {% if posts %}
+        {% for post in posts %}
+            <div class="post">
+                <img src="{{ post.image.url }}">
+
+                <div class="actions">
+                    ❤️ {{ post.like_set.count }} likes
+
+                    <a href="/delete-post/{{ post.id }}/" onclick="return confirm('Delete this post?')">
+                        🗑 Delete
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>You haven't posted anything yet.</p>
+    {% endif %}
 
 </div>
-
-<h3>My Posts</h3>
-
-{% if posts %}
-    {% for post in posts %}
-        <div class="post">
-            <img src="{{ post.image.url }}">
-
-            <div class="actions">
-                ❤️ {{ post.like_set.count }} likes
-
-                <a href="/delete-post/{{ post.id }}/" onclick="return confirm('Delete this post?')">🗑 Delete</a>
-            </div>
-        </div>
-    {% endfor %}
-{% else %}
-    <p>You haven't posted anything yet.</p>
-{% endif %}
 
 {% endblock %}
