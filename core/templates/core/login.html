@@ -2,28 +2,34 @@
 
 {% block content %}
 
-<h2>Login</h2>
+<div class="page-center">
+    <div class="auth-card">
 
-<form method="POST">
-    {% csrf_token %}
-    <input name="username" placeholder="Username"><br><br>
-    <input name="password" type="password" placeholder="Password"><br><br>
-    <button>Login</button>
-</form>
+        <h2>Login</h2>
 
-<p>
-    <a href="/password-reset/">Forgot password?</a>
-</p>
+        <form method="POST">
+            {% csrf_token %}
+            <input name="username" placeholder="Username" required>
+            <input name="password" type="password" placeholder="Password" required>
+            <button>Login</button>
+        </form>
 
+        <p style="margin-top:15px;">
+            <a href="/password-reset/">Forgot password?</a>
+        </p>
 
-<p style="color:red;">{{ error }}</p>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
 
-<hr>
+        <hr>
 
-<p>
-    Don't have an account?
-    <a href="/signup/">Create one</a>
-</p>
+        <p>
+            Don't have an account?
+            <a href="/signup/">Create one</a>
+        </p>
 
+    </div>
+</div>
 
 {% endblock %}
