@@ -2,7 +2,9 @@
 
 {% block content %}
 
-<h2>📸Feed</h2>
+<div class="page-content">
+
+<h2>📸 Feed</h2>
 
 {% for post in posts %}
 <div class="post">
@@ -16,28 +18,27 @@
     <p>{{ post.caption }}</p>
 
     <div class="actions">
-    <span>❤️ {{ post.like_set.count }} likes</span>
+        <span>❤️ {{ post.like_set.count }} likes</span>
 
-    {% if post.id in liked_posts %}
-        <a href="/like/{{ post.id }}/">
-            <i class="fa-solid fa-heart" style="color:red;"></i>
-        </a>
-    {% else %}
-        <a href="/like/{{ post.id }}/">
-            <i class="fa-regular fa-heart"></i>
-        </a>
-    {% endif %}
+        {% if post.id in liked_posts %}
+            <a href="/like/{{ post.id }}/">
+                <i class="fa-solid fa-heart" style="color:red;"></i>
+            </a>
+        {% else %}
+            <a href="/like/{{ post.id }}/">
+                <i class="fa-regular fa-heart"></i>
+            </a>
+        {% endif %}
 
-    {% if post.user == request.user %}
-        <a href="/delete-post/{{ post.id }}/" onclick="return confirm('Delete this post?')">
-            <i class="fa-solid fa-trash"></i>
-        </a>
-    {% endif %}
-</div>
-
+        {% if post.user == request.user %}
+            <a href="/delete-post/{{ post.id }}/" onclick="return confirm('Delete this post?')">
+                <i class="fa-solid fa-trash"></i>
+            </a>
+        {% endif %}
+    </div>
 
     <hr>
-<h4><i class="fa-regular fa-comment"></i> Comments</h4>
+    <h4><i class="fa-regular fa-comment"></i> Comments</h4>
 
     {% for comment in post.comments.all %}
         <p><b>{{ comment.user.username }}</b> {{ comment.text }}</p>
@@ -51,5 +52,7 @@
 
 </div>
 {% endfor %}
+
+</div>
 
 {% endblock %}
