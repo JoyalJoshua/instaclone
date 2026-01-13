@@ -11,28 +11,31 @@
 
 {% if user.is_authenticated %}
 <div class="navbar">
-    <b>📸 InstaClone</b> |
-    <a href="/"><i class="fa-solid fa-house"></i> Feed</a>
-    <a href="/explore/"><i class="fa-solid fa-compass"></i> Explore</a>
-    <a href="/notifications/"><i class="fa-solid fa-bell"></i> Notifications</a>
-    <a href="/upload/"><i class="fa-solid fa-square-plus"></i> Upload</a>
-    <a href="/profile/"><i class="fa-solid fa-user"></i> Profile</a>
-    <a href="/logout/"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
-    <a href="/inbox/"><i class="fa-solid fa-envelope"></i> Messages</a>
+    <div class="nav-brand">📸 InstaClone</div>
 
-    <button onclick="toggleTheme()" style="float:right;">🌙</button>
+    <div class="nav-toggle" onclick="toggleMenu()">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+
+    <div class="nav-links" id="navLinks">
+        <a href="/"><i class="fa-solid fa-house"></i> Feed</a>
+        <a href="/explore/"><i class="fa-solid fa-compass"></i> Explore</a>
+        <a href="/notifications/"><i class="fa-solid fa-bell"></i> Notifications</a>
+        <a href="/upload/"><i class="fa-solid fa-square-plus"></i> Upload</a>
+        <a href="/profile/"><i class="fa-solid fa-user"></i> Profile</a>
+        <a href="/inbox/"><i class="fa-solid fa-envelope"></i> Messages</a>
+        <a href="/logout/"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+
+        <button class="theme-btn" onclick="toggleTheme()">🌙</button>
+    </div>
 </div>
 {% endif %}
 
-
-    {% block content %}
-    {% endblock %}
-
+{% block content %}{% endblock %}
 
 <script>
 function toggleTheme() {
     document.body.classList.toggle("dark");
-
     if (document.body.classList.contains("dark")) {
         localStorage.setItem("theme", "dark");
     } else {
@@ -42,6 +45,10 @@ function toggleTheme() {
 
 if (localStorage.getItem("theme") === "dark") {
     document.body.classList.add("dark");
+}
+
+function toggleMenu() {
+    document.getElementById("navLinks").classList.toggle("show");
 }
 </script>
 

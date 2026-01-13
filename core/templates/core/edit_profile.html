@@ -1,28 +1,38 @@
+
+
 {% extends "core/base.html" %}
 
 {% block content %}
 
-<h1>✏️ Edit Profile</h1>
+<div class="page-content">
+    <div class="edit-profile-card">
 
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
+        <h1>✏️ Edit Profile</h1>
 
-    <p>
-        <b>Current Photo:</b><br>
-        <img src="{{ profile.profile_image.url }}" width="150">
-    </p>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
 
-    <p>
-        Change Photo:<br>
-        <input type="file" name="profile_image">
-    </p>
+            <p>
+                <b>Current Photo</b><br>
+                {% if profile.profile_image %}
+                    <img src="{{ profile.profile_image.url }}" width="140">
+                {% endif %}
+            </p>
 
-    <p>
-        Bio:<br>
-        <textarea name="bio" rows="4" cols="40">{{ profile.bio }}</textarea>
-    </p>
+            <p>
+                <b>Change Photo</b><br>
+                <input type="file" name="profile_image">
+            </p>
 
-    <button type="submit">Save Changes</button>
-</form>
+            <p>
+                <b>Bio</b><br>
+                <textarea name="bio" rows="4">{{ profile.bio }}</textarea>
+            </p>
+
+            <button type="submit">Save Changes</button>
+        </form>
+
+    </div>
+</div>
 
 {% endblock %}
