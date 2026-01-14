@@ -9,10 +9,10 @@
     <div class="post" style="text-align:center;">
 
         {% if profile.profile_image %}
-    <img src="{{ profile.profile_image.url }}" width="140" style="border-radius:50%;">
-{% else %}
-    <img src="{% static 'images/default.png' %}" width="140" style="border-radius:50%;">
-{% endif %}
+            <img src="{{ profile.profile_image.url }}" width="140" style="border-radius:50%;">
+        {% else %}
+            <img src="{% static 'images/default.png' %}" width="140" style="border-radius:50%;">
+        {% endif %}
 
         <h2>{{ request.user.username }}</h2>
 
@@ -31,12 +31,9 @@
     {% if posts %}
         {% for post in posts %}
             <div class="post">
-               {% if profile.profile_image %}
-    <img src="{{ profile.profile_image.url }}">
-{% else %}
-    <img src="{% static 'images/default.png' %}">
-{% endif %}
 
+                <!-- ✅ THIS IS THE REAL POST IMAGE -->
+                <img src="{{ post.image.url }}" alt="Post image">
 
                 <div class="actions">
                     ❤️ {{ post.like_set.count }} likes
