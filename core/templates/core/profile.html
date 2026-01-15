@@ -6,13 +6,17 @@
 <div class="page-content">
 
     <!-- Profile Card -->
-    <div class="post" style="text-align:center;">
+    <div class="post profile-header">
 
-        {% if profile.profile_image %}
-            <img src="{{ profile.profile_image.url }}" width="140" style="border-radius:50%;">
-        {% else %}
-            <img src="{% static 'images/default.png' %}" width="140" style="border-radius:50%;">
-        {% endif %}
+
+        <div class="insta-profile-pic">
+    {% if profile.profile_image %}
+        <img src="{{ profile.profile_image.url }}" alt="Profile">
+    {% else %}
+        <img src="{% static 'images/default.png' %}" alt="Profile">
+    {% endif %}
+</div>
+
 
         <h2>{{ request.user.username }}</h2>
 
